@@ -7,11 +7,41 @@ plugins {
 // The app version is read from VERSION at the repository root so there is one
 // place to change it. versionCode is derived from the same string: 1.2.3 -> 10203.
 val appVersionName: String = rootProject.file("VERSION").readText().trim()
-val appVersionCode: Int = appVersionName
-    .substringBefore('-')
-    .split('.')
-    .map { it.toInt() }
-    .let { (major, minor, patch) -> major * 10000 + minor * 100 + patch }
+val appVersionCode: Int = run {
+    // Matched against the whole string rather than the part before the suffix,
+    // so a dangling "1.2.3-" fails here instead of quietly becoming the
+    // versionName on a release.
+    //
+    // [0-9] explicitly, not Char.isDigit(): that accepts Unicode digits, and so
+    // does Integer.parseInt — "٠.١.٠" would validate *and* parse, giving a
+    // versionCode with no visible relationship to the version string. Silent
+    // agreement on the wrong number is worse than the parse error this check
+    // was added to replace.
+    val semver = Regex("""^([0-9]+)\.([0-9]+)\.([0-9]+)(?:-[0-9A-Za-z][0-9A-Za-z.-]*)?$""")
+    val match = semver.matchEntire(appVersionName)
+    require(match != null) {
+        "VERSION must be MAJOR.MINOR.PATCH with an optional -suffix, ASCII digits only; " +
+            "found \"$appVersionName\""
+    }
+
+    val (major, minor, patch) = match.destructured.toList().map(String::toInt)
+
+    // The encoding gives minor and patch two digits each, so 0.1.100 and 0.2.0
+    // would collide.
+    require(minor < 100 && patch < 100) {
+        "VERSION minor and patch must each be below 100 for the versionCode " +
+            "encoding; found \"$appVersionName\""
+    }
+
+    // Computed as Long so a large major overflows the check rather than
+    // wrapping past it. Android rejects a versionCode above 2100000000.
+    val code = major.toLong() * 10_000L + minor * 100L + patch
+    require(code in 1L..2_100_000_000L) {
+        "VERSION produces versionCode $code, outside the range Android accepts; " +
+            "found \"$appVersionName\""
+    }
+    code.toInt()
+}
 
 android {
     namespace = "io.github.nikolareljin.pharos"

@@ -48,8 +48,15 @@ pharos_package_name() {
   # reports failure on a successful read.
   badging="$("$aapt" dump badging "$artifact" 2>/dev/null)" || return 1
 
-  grep -m1 -oE "^package: name='[^']+'" <<<"$badging" |
-    sed -E "s/^package: name='([^']+)'/\1/"
+  # Captured and checked rather than piped straight to stdout: a non-match then
+  # returns 1 explicitly, so the caller's `|| { log_error ... }` reports which
+  # artifact could not be read instead of the deploy ending on a bare grep
+  # status.
+  local line
+  line="$(grep -m1 -oE "^package: name='[^']+'" <<<"$badging")" || return 1
+  [[ -n "$line" ]] || return 1
+
+  sed -E "s/^package: name='([^']+)'/\1/" <<<"$line"
 }
 
 project_deploy() {
