@@ -1,0 +1,71 @@
+/* The palette is the brand mark's: slate ground, sky structure, amber beacon.
+   Defined as Material's custom-colour hooks so the theme's own components pick
+   them up rather than being overridden one selector at a time. */
+
+:root {
+  --pharos-slate-900: #0f172a;
+  --pharos-slate-800: #1e293b;
+  --pharos-slate-700: #334155;
+  --pharos-sky: #38bdf8;
+  --pharos-sky-deep: #0284c7;
+  --pharos-amber: #f59e0b;
+  --pharos-flame: #fef08a;
+}
+
+/* Light: the deep sky reads as a link colour; amber stays the accent so the
+   beacon means the same thing on the site as it does on the screen. */
+[data-md-color-scheme="default"] {
+  --md-primary-fg-color: var(--pharos-slate-900);
+  --md-primary-fg-color--light: var(--pharos-slate-800);
+  --md-primary-fg-color--dark: var(--pharos-slate-900);
+  --md-accent-fg-color: var(--pharos-sky-deep);
+  --md-typeset-a-color: var(--pharos-sky-deep);
+}
+
+[data-md-color-scheme="slate"] {
+  --md-primary-fg-color: var(--pharos-slate-900);
+  --md-primary-fg-color--light: var(--pharos-slate-800);
+  --md-primary-fg-color--dark: #0b1120;
+  --md-accent-fg-color: var(--pharos-amber);
+  --md-typeset-a-color: var(--pharos-sky);
+  --md-default-bg-color: var(--pharos-slate-900);
+  --md-code-bg-color: var(--pharos-slate-800);
+}
+
+/* The logo is a lighthouse on a dark rounded square; on a dark header it needs
+   a little room rather than a background of its own. */
+.md-header__button.md-logo img {
+  height: 1.6rem;
+  width: 1.6rem;
+}
+
+/* Tables carry most of the reference material here — the design commitments,
+   the provider states, the topic conventions — so they get to breathe. */
+.md-typeset table:not([class]) th {
+  background-color: var(--pharos-slate-800);
+  color: #f8fafc;
+}
+
+.md-typeset table:not([class]) td {
+  vertical-align: top;
+}
+
+/* A status banner used at the top of pages describing designed-but-unbuilt
+   behaviour. Marked with words as well as colour, because colour alone is not a
+   status. */
+.md-typeset .admonition.planned,
+.md-typeset details.planned {
+  border-color: var(--pharos-amber);
+}
+
+.md-typeset .planned > .admonition-title,
+.md-typeset .planned > summary {
+  background-color: rgba(245, 158, 11, 0.12);
+}
+
+.md-typeset .planned > .admonition-title::before,
+.md-typeset .planned > summary::before {
+  background-color: var(--pharos-amber);
+  -webkit-mask-image: var(--md-admonition-icon--note);
+  mask-image: var(--md-admonition-icon--note);
+}
