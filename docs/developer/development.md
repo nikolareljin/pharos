@@ -73,7 +73,9 @@ see.
 ./dev deploy --device <serial>
 ```
 
-On a TV device, connect over the network first:
+On a TV device, connect over the network first — the full workflow, including
+the failure modes worth knowing about, is in
+[Debugging on a Fire TV](fire-tv-debugging.md):
 
 ```sh
 adb connect 192.0.2.42:5555

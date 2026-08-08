@@ -87,5 +87,6 @@ nav:
   - Build:
       - Overview: developer/index.md
       - Development: developer/development.md
+      - Debugging on a Fire TV: developer/fire-tv-debugging.md
       - Testing: developer/testing.md
       - Releasing: operations/release.md

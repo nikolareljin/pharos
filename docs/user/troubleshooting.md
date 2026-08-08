@@ -41,6 +41,10 @@ Check the provider state in Diagnostics:
 Use **Reconnect providers** in Diagnostics to reset the backoff without
 restarting the app.
 
+If you have ADB access to the device, [Debugging on a Fire
+TV](../developer/fire-tv-debugging.md) covers reading logs and reproducing
+navigation problems from a keyboard.
+
 ## The remote does nothing, or focus disappears
 
 Focus loss is a bug, not a configuration problem. Please
