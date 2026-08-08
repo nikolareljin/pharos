@@ -3,6 +3,11 @@ name: Docs
 # Builds the documentation site on every pull request that touches it, and
 # deploys from main. Building on the pull request is the point: a broken link or
 # a page missing from the nav should fail before it is published, not after.
+#
+# There is deliberately no `concurrency:` block here. The preset declares its
+# own (`ci-helpers-pages-<ref>`), and a caller that adds a `pages-<ref>` group —
+# which this workflow used to have — leaves the called jobs queued behind the
+# run that started them.
 
 on:
   push:
@@ -20,50 +25,27 @@ on:
       - .github/workflows/pages.yml
   workflow_dispatch:
 
+# pages and id-token are required even on pull-request runs, where nothing is
+# deployed: GitHub validates a reusable workflow's declared permissions when the
+# run starts, before any job-level `if:` is evaluated.
 permissions:
   contents: read
-
-concurrency:
-  group: pages-${{ github.ref }}
-  cancel-in-progress: true
+  pages: write
+  id-token: write
 
 jobs:
-  build:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v5
-
-      - uses: actions/setup-python@v6
-        with:
-          python-version: "3.12"
-          cache: pip
-          cache-dependency-path: requirements-docs.txt
-
-      - name: Install
-        run: pip install -r requirements-docs.txt
-
+  docs:
+    uses: nikolareljin/ci-helpers/.github/workflows/pages.yml@production
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+    with:
+      python_version: "3.12"
+      requirements_file: "requirements-docs.txt"
       # --strict turns a broken internal link or an orphaned page into a build
       # failure. Without it MkDocs prints a warning nobody reads and publishes
       # the broken page anyway.
-      - name: Build
-        run: mkdocs build --strict
-
-      - name: Upload artifact
-        if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
-        uses: actions/upload-pages-artifact@v4
-        with:
-          path: site
-
-  deploy:
-    needs: build
-    if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
-    runs-on: ubuntu-latest
-    permissions:
-      pages: write
-      id-token: write
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    steps:
-      - id: deployment
-        uses: actions/deploy-pages@v4
+      build_command: "mkdocs build --strict"
+      pages_path: "site"
+      deploy: ${{ github.event_name != 'pull_request' }}
