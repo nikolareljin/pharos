@@ -1,0 +1,43 @@
+# --- Public-boundary guard ----------------------------------------------------
+# The list of private project names must not itself be published.
+.private-names
+
+# --- Android / Gradle ---------------------------------------------------------
+*.iml
+.gradle/
+build/
+captures/
+local.properties
+.cxx/
+.externalNativeBuild/
+release/
+*.apk
+*.aab
+*.ap_
+*.dex
+*.class
+proguard/
+
+# Signing material never belongs in the repository.
+*.jks
+*.keystore
+*.p12
+*.pfx
+keystore.properties
+
+# --- IDE ----------------------------------------------------------------------
+.idea/
+!.idea/codeStyles/
+*.swp
+*~
+.DS_Store
+
+# --- Local config -------------------------------------------------------------
+.env
+.env.*
+!.env.example
+
+# --- Generated / scratch ------------------------------------------------------
+docs/screenshots/
+site/
+*.log

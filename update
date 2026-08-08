@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+# Compatibility shim. Use ./dev update — this is removed one minor version on.
+exec bash "$(dirname "$0")/scripts/cli.sh" update "$@"

@@ -1,0 +1,30 @@
+name: PR Gate
+
+# What every pull request must pass. Mirrors ci.yml's commands — when the Gradle
+# project lands, both switch to ./gradlew lintDebug / testDebugUnitTest /
+# assembleDebug together.
+#
+# check_release_tag makes a release/X.Y.Z pull request fail early if its tag
+# already exists, rather than at tag time when the merge has already happened.
+
+on:
+  pull_request:
+
+permissions:
+  contents: read
+  pull-requests: read
+  statuses: write
+
+jobs:
+  gate:
+    uses: nikolareljin/ci-helpers/.github/workflows/pr-gate.yml@production
+    with:
+      check_release_tag: true
+      lint_command: >-
+        git submodule update --init --recursive &&
+        bash scripts/check-private-names.sh &&
+        shellcheck -S warning scripts/preflight.sh scripts/check-private-names.sh scripts/gen_icons.sh scripts/project.sh
+      test_command: >-
+        git submodule update --init --recursive &&
+        bash scripts/preflight.sh --quick
+      timeout_minutes: 15

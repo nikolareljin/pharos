@@ -1,0 +1,39 @@
+name: CI
+
+# Pharos is a public repository, so it runs full CI rather than the
+# tagging-only workflow set used for private repositories.
+#
+# Until the Gradle project lands this calls the generic preset with explicit
+# commands. The moment app/ exists, this becomes:
+#
+#   uses: nikolareljin/ci-helpers/.github/workflows/kotlin.yml@production
+#   with:
+#     java_version: "17"
+#     lint_command: "./gradlew lintDebug"
+#     test_command: "./gradlew testDebugUnitTest"
+#     build_command: "./gradlew assembleDebug"
+#
+# The shared checkout does not fetch submodules, so every command that needs
+# script-helpers initializes it first.
+
+# Pull requests are covered by pr-gate.yml; running both would double every job.
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  checks:
+    uses: nikolareljin/ci-helpers/.github/workflows/ci.yml@production
+    with:
+      lint_command: >-
+        git submodule update --init --recursive &&
+        bash scripts/check-private-names.sh &&
+        shellcheck -S warning scripts/preflight.sh scripts/check-private-names.sh scripts/gen_icons.sh scripts/project.sh
+      test_command: >-
+        git submodule update --init --recursive &&
+        bash scripts/preflight.sh --quick
+      timeout_minutes: 15

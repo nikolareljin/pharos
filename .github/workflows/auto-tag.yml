@@ -1,0 +1,25 @@
+name: Auto Tag Release
+
+# Creates the version tag when a release/X.Y.Z pull request merges to main.
+#
+# auto-tag.yml, not auto-tag-release.yml: the latter declares actions: write for
+# its dispatch job, and GitHub validates a reusable workflow's declared
+# permissions at startup regardless of job-level if: gates, so calling it
+# without that permission fails the entire run with startup_failure.
+#
+# update_production_tag stays false — Pharos is an application, not a shared
+# library that other repositories pin at @production.
+
+on:
+  push:
+    branches: [main]
+
+permissions:
+  contents: write
+  pull-requests: read
+
+jobs:
+  tag:
+    uses: nikolareljin/ci-helpers/.github/workflows/auto-tag.yml@production
+    with:
+      update_production_tag: false
