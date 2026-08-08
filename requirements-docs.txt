@@ -1,0 +1,4 @@
+# Documentation site. Pinned so a docs build never breaks on somebody else's
+# release day.
+mkdocs==1.6.1
+mkdocs-material==9.5.49

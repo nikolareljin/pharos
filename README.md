@@ -88,6 +88,10 @@ in `PLAN.md`.
 
 ## Documentation
 
+**[nikolareljin.github.io/pharos](https://nikolareljin.github.io/pharos/)** — the
+full documentation site. The same pages are in `docs/` if you prefer them in the
+repository.
+
 - [docs/index.md](docs/index.md) — start here
 - [docs/user/install.md](docs/user/install.md) — sideloading, Fire TV setup
 - [docs/developer/architecture.md](docs/developer/architecture.md) — how the node is put together

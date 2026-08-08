@@ -119,6 +119,27 @@ Modules split when they contain code. `:core:model`, `:core:runtime` and
 `:core:protocol` appear as the runtime and protocol land — this repository does
 not carry empty directories to look organised.
 
+## The documentation site
+
+The pages under `docs/` are published to
+[nikolareljin.github.io/pharos](https://nikolareljin.github.io/pharos/) by
+`.github/workflows/pages.yml`. Build it locally before changing structure:
+
+```sh
+python3 -m venv .venv && .venv/bin/pip install -r requirements-docs.txt
+.venv/bin/mkdocs serve      # live reload on http://127.0.0.1:8000
+.venv/bin/mkdocs build --strict
+```
+
+`--strict` is what CI runs: a broken internal link or a page missing from the
+`nav` in `mkdocs.yml` fails the build. Without it MkDocs prints a warning nobody
+reads and publishes the broken page anyway. A new page has to be added to the
+`nav` — an orphaned file is a build failure, not a silent omission.
+
+Links to files outside `docs/` (`PLAN.md`, `SECURITY.md`, `CONTRIBUTING.md`)
+must be full GitHub URLs; MkDocs cannot resolve a relative path above its
+`docs_dir`.
+
 ## Brand assets
 
 ```sh

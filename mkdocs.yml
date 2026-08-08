@@ -1,0 +1,91 @@
+site_name: Pharos
+site_description: >-
+  A general-purpose Android display and control node for dashboards, telemetry,
+  alerts, media, automation, and AI-assisted interfaces.
+site_url: https://nikolareljin.github.io/pharos/
+repo_url: https://github.com/nikolareljin/pharos
+repo_name: nikolareljin/pharos
+edit_uri: edit/main/docs/
+
+docs_dir: docs
+site_dir: site
+
+theme:
+  name: material
+  # No Google Fonts: the site is served from Pages and should not make a
+  # third-party request to render text.
+  font: false
+  logo: assets/logo.svg
+  favicon: assets/favicon.png
+  icon:
+    repo: fontawesome/brands/github
+  palette:
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: custom
+      accent: custom
+      toggle:
+        icon: material/weather-night
+        name: Switch to dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: custom
+      accent: custom
+      toggle:
+        icon: material/weather-sunny
+        name: Switch to light mode
+  features:
+    - navigation.instant
+    - navigation.tracking
+    - navigation.sections
+    - navigation.top
+    - content.code.copy
+    - content.action.edit
+    - search.highlight
+    - toc.follow
+
+extra_css:
+  - stylesheets/extra.css
+
+markdown_extensions:
+  - admonition
+  - attr_list
+  - md_in_html
+  - tables
+  - toc:
+      permalink: true
+  - pymdownx.details
+  - pymdownx.superfences
+  - pymdownx.tabbed:
+      alternate_style: true
+
+plugins:
+  - search
+
+extra:
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/nikolareljin/pharos
+      name: Pharos on GitHub
+
+nav:
+  - Home: index.md
+  - Get started:
+      - Install: user/install.md
+      - Fire TV: user/fire-tv.md
+      - First launch: user/onboarding.md
+      - Troubleshooting: user/troubleshooting.md
+      - Overview: user/index.md
+  - Integrate:
+      - Feeding Pharos: developer/integrations.md
+      - Protocol v1: developer/protocol.md
+      - Providers: developer/providers.md
+  - Understand:
+      - Architecture: developer/architecture.md
+      - Screens and widgets: developer/renderers.md
+      - Security model: developer/security.md
+  - Build:
+      - Overview: developer/index.md
+      - Development: developer/development.md
+      - Testing: developer/testing.md
+      - Releasing: operations/release.md
