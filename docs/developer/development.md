@@ -97,6 +97,13 @@ phone, a tablet.
 An emulator does not represent Fire TV performance. Anything about smoothness,
 memory or cold start is measured on hardware or not claimed at all.
 
+### One layout quirk worth knowing
+
+The root project's Gradle output is `.build/`, not `build/`, because `./build`
+at the repository root is the dev-CLI shim script and the two cannot share a
+name — Gradle fails with an unhelpful "could not create directory" if they do.
+`:app` is unaffected and keeps the standard `app/build/`.
+
 ## Project layout
 
 ```

@@ -22,8 +22,8 @@
 #   another reason the PNG is committed rather than built.
 #
 #   Sizes follow the Android asset contract:
-#     ic_launcher            48/72/96/144/192  (48dp legacy icon)
 #     ic_launcher_foreground 108/162/216/324/432 (108dp adaptive layer)
+#     ic_launcher_monochrome same sizes (themed icons, Android 13+)
 #     banner                 320x180 in drawable-xhdpi (leanback launcher)
 # ----------------------------------------------------
 set -euo pipefail
@@ -101,16 +101,15 @@ if [[ ! -d "app/src/main" ]]; then
   exit 0
 fi
 
+# minSdk is 26, so the adaptive icon in mipmap-anydpi applies on every
+# supported device and legacy square launcher PNGs would be dead weight the
+# system never reads. Only the adaptive layers are generated.
 log_info "launcher icons"
 densities=(mdpi hdpi xhdpi xxhdpi xxxhdpi)
-legacy=(48 72 96 144 192)
 foreground=(108 162 216 324 432)
 
 for i in "${!densities[@]}"; do
-  d="${densities[$i]}"
-  render "$MASTER" "$RES/mipmap-$d/ic_launcher.png"            "${legacy[$i]}"
-  render "$MASTER" "$RES/mipmap-$d/ic_launcher_round.png"      "${legacy[$i]}"
-  render "$MARK"   "$RES/mipmap-$d/ic_launcher_foreground.png" "${foreground[$i]}"
+  render "$MARK" "$RES/mipmap-${densities[$i]}/ic_launcher_foreground.png" "${foreground[$i]}"
 done
 
 # The themed (monochrome) layer is the mark flattened to a single opaque colour;

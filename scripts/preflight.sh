@@ -27,7 +27,7 @@ if [[ ! -f "$SCRIPT_HELPERS_DIR/helpers.sh" ]]; then
 fi
 # shellcheck source=/dev/null
 source "$SCRIPT_HELPERS_DIR/helpers.sh"
-shlib_import logging help changelog
+shlib_import logging help
 
 QUICK=false
 while [[ $# -gt 0 ]]; do
@@ -55,7 +55,7 @@ run_check() {
 # --- Checks that apply from the very first commit -----------------------------
 
 run_check "public-boundary scan" bash "$SCRIPT_DIR/check-private-names.sh"
-run_check "CHANGELOG header format" changelog_check_header "$ROOT_DIR/CHANGELOG.md"
+run_check "CHANGELOG header format" bash "$SCRIPT_DIR/check-changelog.sh"
 
 if command -v shellcheck >/dev/null 2>&1; then
   # Only the scripts this repository owns. scripts/cli.sh, scripts/_bootstrap.sh
@@ -65,6 +65,7 @@ if command -v shellcheck >/dev/null 2>&1; then
   run_check "shellcheck" shellcheck -S warning \
     "$SCRIPT_DIR/preflight.sh" \
     "$SCRIPT_DIR/check-private-names.sh" \
+    "$SCRIPT_DIR/check-changelog.sh" \
     "$SCRIPT_DIR/gen_icons.sh" \
     "$SCRIPT_DIR/project.sh"
 else

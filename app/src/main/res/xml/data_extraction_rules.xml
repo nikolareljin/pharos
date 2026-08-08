@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Nothing is backed up or transferred, deliberately.
+
+  The node identity and its paired credentials must not be cloned onto a second
+  device: two nodes reporting the same identity look to a controller like one
+  node behaving erratically, and that is a very slow thing to diagnose.
+  Restoring an identity is an explicit action in the app, not something a device
+  transfer does silently.
+-->
+<data-extraction-rules>
+    <cloud-backup>
+        <exclude domain="root" />
+        <exclude domain="file" />
+        <exclude domain="database" />
+        <exclude domain="sharedpref" />
+    </cloud-backup>
+    <device-transfer>
+        <exclude domain="root" />
+        <exclude domain="file" />
+        <exclude domain="database" />
+        <exclude domain="sharedpref" />
+    </device-transfer>
+</data-extraction-rules>

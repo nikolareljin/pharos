@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Cutout handling arrives in API 27. minSdk is 26, so it lives here
+         rather than in the base theme where it would be a NewApi error. -->
+    <style name="Theme.Pharos" parent="android:Theme.Material.NoActionBar">
+        <item name="android:windowBackground">@color/pharos_slate_900</item>
+        <item name="android:statusBarColor">@color/pharos_slate_900</item>
+        <item name="android:navigationBarColor">@color/pharos_slate_900</item>
+        <item name="android:windowLayoutInDisplayCutoutMode">shortEdges</item>
+    </style>
+</resources>
