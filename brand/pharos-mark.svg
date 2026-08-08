@@ -1,0 +1,65 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <title>Pharos mark</title>
+  <desc>The lighthouse alone, on a transparent ground, scaled into the adaptive
+  icon safe zone. Derived from pharos-logo.svg — the rounded-square canvas is
+  deliberately absent, because Android supplies the mask and would otherwise
+  clip a frame inside a frame.</desc>
+
+  <defs>
+    <radialGradient id="beaconGlow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#F59E0B" stop-opacity="0.6"/>
+      <stop offset="40%" stop-color="#F59E0B" stop-opacity="0.2"/>
+      <stop offset="100%" stop-color="#F59E0B" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <!-- The mark occupies x 166..346, y 78..444 in the master's coordinates.
+       scale(0.866) brings its 366px height to ~317px = 62% of the 512 canvas,
+       inside the 66% adaptive-icon safe zone; the translate re-centres it. -->
+  <g transform="translate(34.3,30) scale(0.866)">
+    <!-- Beacon Light Glow Radius -->
+    <circle cx="256" cy="120" r="80" fill="url(#beaconGlow)"/>
+
+    <g id="alexandrian-pharos">
+      <!-- Base Platform Foundation -->
+      <path d="M176 430 L336 430 L346 444 L166 444 Z" fill="#1E293B" stroke="#38BDF8" stroke-width="3"/>
+
+      <!-- Tier 1: Large Square Base (Classical Hellenistic Base) -->
+      <polygon points="186,430 200,320 312,320 326,430" fill="#0F172A" stroke="#38BDF8" stroke-width="4"/>
+      <line x1="200" y1="320" x2="312" y2="320" stroke="#38BDF8" stroke-width="3"/>
+      <line x1="256" y1="320" x2="256" y2="430" stroke="#38BDF8" stroke-width="2" opacity="0.4"/>
+      <!-- Entrance Portal / Arch -->
+      <path d="M244 430 V 390 A 12 12 0 0 1 268 390 V 430 Z" fill="#38BDF8" opacity="0.8"/>
+
+      <!-- Tier 1 Cornice / Ledge -->
+      <rect x="192" y="312" width="128" height="8" rx="2" fill="#38BDF8"/>
+
+      <!-- Tier 2: Octagonal Middle Section -->
+      <polygon points="210,312 220,200 292,200 302,312" fill="#1E293B" stroke="#38BDF8" stroke-width="4"/>
+      <line x1="238" y1="312" x2="242" y2="200" stroke="#38BDF8" stroke-width="2" opacity="0.5"/>
+      <line x1="274" y1="312" x2="270" y2="200" stroke="#38BDF8" stroke-width="2" opacity="0.5"/>
+
+      <!-- Tier 2 Cornice / Ledge -->
+      <rect x="212" y="192" width="88" height="8" rx="2" fill="#38BDF8"/>
+
+      <!-- Tier 3: Circular Lantern Tower Section -->
+      <rect x="226" y="148" width="60" height="44" fill="#0F172A" stroke="#38BDF8" stroke-width="4"/>
+      <line x1="240" y1="192" x2="240" y2="148" stroke="#38BDF8" stroke-width="2"/>
+      <line x1="272" y1="192" x2="272" y2="148" stroke="#38BDF8" stroke-width="2"/>
+
+      <!-- Fire Beacon Chamber (Glowing Fire / Light Source) -->
+      <rect x="238" y="154" width="36" height="32" rx="4" fill="#F59E0B"/>
+      <circle cx="256" cy="170" r="10" fill="#FEF08A"/>
+
+      <!-- Tier 3 Roof / Dome Base -->
+      <path d="M222 148 L290 148 L282 140 L230 140 Z" fill="#38BDF8"/>
+
+      <!-- Classical Conical Roof / Top Dome -->
+      <path d="M230 140 L256 100 L282 140 Z" fill="#1E293B" stroke="#38BDF8" stroke-width="3"/>
+
+      <!-- Top Statue Finial (Ptolemaic / Alexandrian Pharos Finial) -->
+      <line x1="256" y1="100" x2="256" y2="82" stroke="#F59E0B" stroke-width="3"/>
+      <circle cx="256" cy="78" r="5" fill="#F59E0B"/>
+    </g>
+  </g>
+</svg>

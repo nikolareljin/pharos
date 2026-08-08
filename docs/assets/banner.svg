@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 180" width="320" height="180">
+  <title>Pharos TV banner</title>
+  <desc>320x180 leanback launcher banner. Android TV and Fire TV show this
+  instead of the launcher icon; without android:banner the app can be missing
+  from the TV home screen entirely.
+
+  The wordmark is live text in DejaVu Sans Bold — the font shipped by the
+  rasterizing host. Regenerating on a machine without it will shift the
+  lettering, which is why banner.png is committed rather than built in CI.</desc>
+
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0F172A"/>
+      <stop offset="100%" stop-color="#1E293B"/>
+    </linearGradient>
+    <radialGradient id="beaconGlow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#F59E0B" stop-opacity="0.6"/>
+      <stop offset="40%" stop-color="#F59E0B" stop-opacity="0.2"/>
+      <stop offset="100%" stop-color="#F59E0B" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="rayGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FBBF24" stop-opacity="0.28"/>
+      <stop offset="100%" stop-color="#FBBF24" stop-opacity="0"/>
+    </linearGradient>
+  </defs>
+
+  <rect x="0" y="0" width="320" height="180" fill="url(#bgGrad)"/>
+
+  <!-- Light thrown across the banner from the beacon. -->
+  <polygon points="54,42 320,0 320,96" fill="url(#rayGrad)"/>
+
+  <!-- The mark, scaled from the master's 180x366 bounding box to 140px tall. -->
+  <g transform="translate(-43.4,-9.8) scale(0.382)">
+    <circle cx="256" cy="120" r="80" fill="url(#beaconGlow)"/>
+    <path d="M176 430 L336 430 L346 444 L166 444 Z" fill="#1E293B" stroke="#38BDF8" stroke-width="3"/>
+    <polygon points="186,430 200,320 312,320 326,430" fill="#0F172A" stroke="#38BDF8" stroke-width="4"/>
+    <line x1="200" y1="320" x2="312" y2="320" stroke="#38BDF8" stroke-width="3"/>
+    <path d="M244 430 V 390 A 12 12 0 0 1 268 390 V 430 Z" fill="#38BDF8" opacity="0.8"/>
+    <rect x="192" y="312" width="128" height="8" rx="2" fill="#38BDF8"/>
+    <polygon points="210,312 220,200 292,200 302,312" fill="#1E293B" stroke="#38BDF8" stroke-width="4"/>
+    <rect x="212" y="192" width="88" height="8" rx="2" fill="#38BDF8"/>
+    <rect x="226" y="148" width="60" height="44" fill="#0F172A" stroke="#38BDF8" stroke-width="4"/>
+    <rect x="238" y="154" width="36" height="32" rx="4" fill="#F59E0B"/>
+    <circle cx="256" cy="170" r="10" fill="#FEF08A"/>
+    <path d="M222 148 L290 148 L282 140 L230 140 Z" fill="#38BDF8"/>
+    <path d="M230 140 L256 100 L282 140 Z" fill="#1E293B" stroke="#38BDF8" stroke-width="3"/>
+    <line x1="256" y1="100" x2="256" y2="82" stroke="#F59E0B" stroke-width="3"/>
+    <circle cx="256" cy="78" r="5" fill="#F59E0B"/>
+  </g>
+
+  <text x="112" y="92" font-family="DejaVu Sans, Roboto, Arial, sans-serif"
+        font-size="34" font-weight="bold" letter-spacing="3" fill="#F8FAFC">PHAROS</text>
+  <text x="114" y="116" font-family="DejaVu Sans, Roboto, Arial, sans-serif"
+        font-size="13" letter-spacing="2.5" fill="#38BDF8">DISPLAY NODE</text>
+</svg>

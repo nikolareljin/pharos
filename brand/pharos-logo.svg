@@ -1,0 +1,113 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <title>Pharos</title>
+  <desc>The lighthouse of Alexandria as a network display node: a beacon casting
+  light, with external systems connecting in from the edges.</desc>
+  <defs>
+    <!-- Background Gradient -->
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0F172A"/>
+      <stop offset="100%" stop-color="#1E293B"/>
+    </linearGradient>
+
+    <!-- Beacon Light Glow Gradient -->
+    <radialGradient id="beaconGlow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#F59E0B" stop-opacity="0.6"/>
+      <stop offset="40%" stop-color="#F59E0B" stop-opacity="0.2"/>
+      <stop offset="100%" stop-color="#F59E0B" stop-opacity="0"/>
+    </radialGradient>
+
+    <!-- Light Rays Gradient -->
+    <linearGradient id="rayGradLeft" x1="100%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#FBBF24" stop-opacity="0.5"/>
+      <stop offset="100%" stop-color="#FBBF24" stop-opacity="0"/>
+    </linearGradient>
+
+    <linearGradient id="rayGradRight" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FBBF24" stop-opacity="0.5"/>
+      <stop offset="100%" stop-color="#FBBF24" stop-opacity="0"/>
+    </linearGradient>
+  </defs>
+
+  <!-- App Icon Canvas Base -->
+  <rect x="32" y="32" width="448" height="448" rx="96" fill="url(#bgGrad)" stroke="#334155" stroke-width="4"/>
+
+  <!-- Light Projection Beams from Beacon -->
+  <polygon points="256,120 40,40 40,160" fill="url(#rayGradLeft)"/>
+  <polygon points="256,120 472,40 472,160" fill="url(#rayGradRight)"/>
+
+  <!-- Outer Network Connection Ring (Node Integration) -->
+  <circle cx="256" cy="256" r="180" fill="none" stroke="#38BDF8" stroke-width="3" stroke-dasharray="8 8" opacity="0.4"/>
+
+  <!-- Network Integration Nodes & Lines -->
+  <g stroke="#38BDF8" stroke-width="3" opacity="0.7">
+    <!-- Top Left Node Line -->
+    <line x1="220" y1="120" x2="110" y2="110"/>
+    <!-- Top Right Node Line -->
+    <line x1="292" y1="120" x2="402" y2="110"/>
+    <!-- Middle Left Node Line -->
+    <line x1="210" y1="240" x2="90" y2="256"/>
+    <!-- Middle Right Node Line -->
+    <line x1="302" y1="240" x2="422" y2="256"/>
+    <!-- Bottom Left Node Line -->
+    <line x1="200" y1="380" x2="110" y2="400"/>
+    <!-- Bottom Right Node Line -->
+    <line x1="312" y1="380" x2="402" y2="400"/>
+  </g>
+
+  <!-- Endpoint Hub Nodes (Connecting External Systems) -->
+  <circle cx="110" cy="110" r="7" fill="#38BDF8"/>
+  <circle cx="402" cy="110" r="7" fill="#38BDF8"/>
+  <circle cx="90" cy="256" r="7" fill="#38BDF8"/>
+  <circle cx="422" cy="256" r="7" fill="#38BDF8"/>
+  <circle cx="110" cy="400" r="7" fill="#38BDF8"/>
+  <circle cx="402" cy="400" r="7" fill="#38BDF8"/>
+
+  <!-- Beacon Light Glow Radius -->
+  <circle cx="256" cy="120" r="80" fill="url(#beaconGlow)"/>
+
+  <!-- ALEXANDRIAN PHAROS LIGHTHOUSE STRUCTURE -->
+  <g id="alexandrian-pharos">
+    <!-- Base Platform Foundation -->
+    <path d="M176 430 L336 430 L346 444 L166 444 Z" fill="#1E293B" stroke="#38BDF8" stroke-width="3"/>
+    
+    <!-- Tier 1: Large Square Base (Classical Hellenistic Base) -->
+    <polygon points="186,430 200,320 312,320 326,430" fill="#0F172A" stroke="#38BDF8" stroke-width="4"/>
+    <!-- Architectural Detail Lines on Base -->
+    <line x1="200" y1="320" x2="312" y2="320" stroke="#38BDF8" stroke-width="3"/>
+    <line x1="256" y1="320" x2="256" y2="430" stroke="#38BDF8" stroke-width="2" opacity="0.4"/>
+    <!-- Entrance Portal / Arch -->
+    <path d="M244 430 V 390 A 12 12 0 0 1 268 390 V 430 Z" fill="#38BDF8" opacity="0.8"/>
+
+    <!-- Tier 1 Cornice / Ledge -->
+    <rect x="192" y="312" width="128" height="8" rx="2" fill="#38BDF8"/>
+
+    <!-- Tier 2: Octagonal Middle Section -->
+    <polygon points="210,312 220,200 292,200 302,312" fill="#1E293B" stroke="#38BDF8" stroke-width="4"/>
+    <!-- Octagonal Facet Lines -->
+    <line x1="238" y1="312" x2="242" y2="200" stroke="#38BDF8" stroke-width="2" opacity="0.5"/>
+    <line x1="274" y1="312" x2="270" y2="200" stroke="#38BDF8" stroke-width="2" opacity="0.5"/>
+
+    <!-- Tier 2 Cornice / Ledge -->
+    <rect x="212" y="192" width="88" height="8" rx="2" fill="#38BDF8"/>
+
+    <!-- Tier 3: Circular Lantern Tower Section -->
+    <rect x="226" y="148" width="60" height="44" fill="#0F172A" stroke="#38BDF8" stroke-width="4"/>
+    <!-- Vertical Pillars of Lantern -->
+    <line x1="240" y1="192" x2="240" y2="148" stroke="#38BDF8" stroke-width="2"/>
+    <line x1="272" y1="192" x2="272" y2="148" stroke="#38BDF8" stroke-width="2"/>
+
+    <!-- Fire Beacon Chamber (Glowing Fire / Light Source) -->
+    <rect x="238" y="154" width="36" height="32" rx="4" fill="#F59E0B"/>
+    <circle cx="256" cy="170" r="10" fill="#FEF08A"/>
+
+    <!-- Tier 3 Roof / Dome Base -->
+    <path d="M222 148 L290 148 L282 140 L230 140 Z" fill="#38BDF8"/>
+
+    <!-- Classical Conical Roof / Top Dome -->
+    <path d="M230 140 L256 100 L282 140 Z" fill="#1E293B" stroke="#38BDF8" stroke-width="3"/>
+
+    <!-- Top Statue Finial (Ptolemaic / Alexandrian Pharos Finial) -->
+    <line x1="256" y1="100" x2="256" y2="82" stroke="#F59E0B" stroke-width="3"/>
+    <circle cx="256" cy="78" r="5" fill="#F59E0B"/>
+  </g>
+</svg>
