@@ -8,19 +8,23 @@ plugins {
 // place to change it. versionCode is derived from the same string: 1.2.3 -> 10203.
 val appVersionName: String = rootProject.file("VERSION").readText().trim()
 val appVersionCode: Int = run {
-    val parts = appVersionName.substringBefore('-').split('.')
-
-    // ASCII digits explicitly, not Char.isDigit(): that accepts Unicode digits,
-    // and so does Integer.parseInt — "٠.١.٠" would validate *and* parse, giving
-    // a versionCode with no visible relationship to the version string. Silent
+    // Matched against the whole string rather than the part before the suffix,
+    // so a dangling "1.2.3-" fails here instead of quietly becoming the
+    // versionName on a release.
+    //
+    // [0-9] explicitly, not Char.isDigit(): that accepts Unicode digits, and so
+    // does Integer.parseInt — "٠.١.٠" would validate *and* parse, giving a
+    // versionCode with no visible relationship to the version string. Silent
     // agreement on the wrong number is worse than the parse error this check
     // was added to replace.
-    require(parts.size == 3 && parts.all { p -> p.isNotEmpty() && p.all { it in '0'..'9' } }) {
+    val semver = Regex("""^([0-9]+)\.([0-9]+)\.([0-9]+)(?:-[0-9A-Za-z][0-9A-Za-z.-]*)?$""")
+    val match = semver.matchEntire(appVersionName)
+    require(match != null) {
         "VERSION must be MAJOR.MINOR.PATCH with an optional -suffix, ASCII digits only; " +
             "found \"$appVersionName\""
     }
 
-    val (major, minor, patch) = parts.map(String::toInt)
+    val (major, minor, patch) = match.destructured.toList().map(String::toInt)
 
     // The encoding gives minor and patch two digits each, so 0.1.100 and 0.2.0
     // would collide.
