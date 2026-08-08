@@ -19,6 +19,8 @@ import io.github.nikolareljin.pharos.feature.diagnostics.Diagnostics
 import io.github.nikolareljin.pharos.feature.diagnostics.DiagnosticsScreen
 import io.github.nikolareljin.pharos.feature.home.HomeScreen
 import io.github.nikolareljin.pharos.ui.theme.PharosTheme
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 
 /**
  * Which screen is showing.
@@ -54,15 +56,25 @@ fun PharosApp(nodeIdentity: NodeIdentity) {
 
                 PharosScreen.Diagnostics -> {
                     BackHandler { screen = PharosScreen.Home }
-                    val id = nodeId
-                    if (id == null) {
-                        Text("Collecting diagnostics…")
-                    } else {
+
+                    // Collected off the main thread, not inside composition:
+                    // StatFs and getMemoryInfo both touch the system, and this
+                    // codebase's own rule is that a renderer draws and does not
+                    // compute.
+                    var diagnostics by remember { mutableStateOf<Diagnostics?>(null) }
+                    LaunchedEffect(nodeId) {
+                        val id = nodeId ?: return@LaunchedEffect
+                        diagnostics = withContext(Dispatchers.IO) {
+                            Diagnostics.collect(context, id)
+                        }
+                    }
+
+                    diagnostics?.let {
                         DiagnosticsScreen(
-                            diagnostics = remember(id) { Diagnostics.collect(context, id) },
+                            diagnostics = it,
                             onBack = { screen = PharosScreen.Home },
                         )
-                    }
+                    } ?: Text("Collecting diagnostics…")
                 }
             }
         }
