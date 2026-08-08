@@ -63,6 +63,20 @@ List of devices attached
 Anything else means you are not connected yet — see
 [Troubleshooting](#troubleshooting).
 
+### Point every command at the right device
+
+The moment a second device is attached — an emulator, a phone on the same
+desk — a bare `adb shell` fails with `more than one device/emulator`, or worse,
+succeeds against the wrong one. Set the target once for the session:
+
+```sh
+export ANDROID_SERIAL=192.0.2.42:5555
+```
+
+Every `adb` command below then goes to the stick without repeating anything.
+`adb devices` shows the serials to choose from, and `adb -s <serial> …` still
+overrides it for a single command.
+
 ## Install and launch
 
 The project CLI handles the whole cycle, including a check that catches a
@@ -79,6 +93,8 @@ By hand:
 adb -s 192.0.2.42:5555 install -r --user 0 app/build/outputs/apk/debug/app-debug.apk
 adb -s 192.0.2.42:5555 shell pm list packages --user 0 | grep pharos
 ```
+
+`-s` is spelled out here; with `ANDROID_SERIAL` exported you can drop it.
 
 Two things to know before the first install:
 
