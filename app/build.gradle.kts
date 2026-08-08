@@ -9,15 +9,34 @@ plugins {
 val appVersionName: String = rootProject.file("VERSION").readText().trim()
 val appVersionCode: Int = run {
     val parts = appVersionName.substringBefore('-').split('.')
-    // Checked rather than destructured blind: `0.1`, a stray space or an
-    // editor's trailing character would otherwise fail deep inside Gradle
-    // configuration with a NumberFormatException that names neither the file
-    // nor the value.
-    require(parts.size == 3 && parts.all { it.isNotEmpty() && it.all(Char::isDigit) }) {
-        "VERSION must be MAJOR.MINOR.PATCH with an optional -suffix; found \"$appVersionName\""
+
+    // ASCII digits explicitly, not Char.isDigit(): that accepts Unicode digits,
+    // and so does Integer.parseInt — "٠.١.٠" would validate *and* parse, giving
+    // a versionCode with no visible relationship to the version string. Silent
+    // agreement on the wrong number is worse than the parse error this check
+    // was added to replace.
+    require(parts.size == 3 && parts.all { p -> p.isNotEmpty() && p.all { it in '0'..'9' } }) {
+        "VERSION must be MAJOR.MINOR.PATCH with an optional -suffix, ASCII digits only; " +
+            "found \"$appVersionName\""
     }
+
     val (major, minor, patch) = parts.map(String::toInt)
-    major * 10000 + minor * 100 + patch
+
+    // The encoding gives minor and patch two digits each, so 0.1.100 and 0.2.0
+    // would collide.
+    require(minor < 100 && patch < 100) {
+        "VERSION minor and patch must each be below 100 for the versionCode " +
+            "encoding; found \"$appVersionName\""
+    }
+
+    // Computed as Long so a large major overflows the check rather than
+    // wrapping past it. Android rejects a versionCode above 2100000000.
+    val code = major.toLong() * 10_000L + minor * 100L + patch
+    require(code in 1L..2_100_000_000L) {
+        "VERSION produces versionCode $code, outside the range Android accepts; " +
+            "found \"$appVersionName\""
+    }
+    code.toInt()
 }
 
 android {
