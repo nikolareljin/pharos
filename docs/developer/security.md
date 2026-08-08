@@ -1,7 +1,8 @@
 # Security model
 
-For reporting a vulnerability, see [SECURITY.md](https://github.com/nikolareljin/pharos/blob/main/SECURITY.md). This page
-is the design rationale.
+For reporting a vulnerability, see
+[SECURITY.md](https://github.com/nikolareljin/pharos/blob/main/SECURITY.md).
+This page is the design rationale.
 
 ## The situation Pharos is in
 
