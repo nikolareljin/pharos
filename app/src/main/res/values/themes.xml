@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- The window theme exists only to paint the background before Compose
+         takes over. A white flash on launch is what a display node looks like
+         when it crashes, so the launch window is already the app's colour. -->
+    <style name="Theme.Pharos" parent="android:Theme.Material.NoActionBar">
+        <item name="android:windowBackground">@color/pharos_slate_900</item>
+        <item name="android:statusBarColor">@color/pharos_slate_900</item>
+        <item name="android:navigationBarColor">@color/pharos_slate_900</item>
+    </style>
+</resources>

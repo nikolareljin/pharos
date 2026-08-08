@@ -23,6 +23,21 @@ malformed header silently falls back to an auto-generated commit list.
 - CI through the shared reusable workflows: build/lint/test, PR gate, release
   tag gate, auto-tag on merge, and a secret scan.
 - Documentation set under `docs/`, split by audience.
+- Android application bootstrap: Kotlin, Jetpack Compose, Gradle 8.13 wrapper,
+  AGP 8.7, a `gradle/libs.versions.toml` version catalog, `minSdk` 26 /
+  `targetSdk` 35, and no dependency on Google Play Services.
+- Persistent random node identity, generated once and stable across restarts.
+- Capability detection (leanback, touch, audio, camera, microphone, web).
+- Logical input abstraction mapping remote, keyboard and gamepad keys to one set
+  of actions.
+- Focus-aware UI with a focus indicator that changes colour, border and scale
+  together rather than relying on colour alone.
+- Diagnostics screen: versions, node id, device, memory, storage, display and
+  capabilities.
+- Launcher icons, adaptive and themed icon layers, and the TV banner, all
+  generated from `brand/`.
+- 16 unit tests covering identity, capability mapping and input; instrumented
+  D-pad navigation tests.
 
 ## 2026-08-07 — v0.1.0
 

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<lint>
+    <!--
+      ObsoleteSdkInt argues that with minSdk 26 the -v26 qualifier is redundant
+      and the folder should be plain mipmap-anydpi. Following that advice breaks
+      the build: AAPT2 then fails to resolve @mipmap/ic_launcher at all
+      ("resource mipmap/ic_launcher not found"). -v26 is also what every Android
+      toolchain emits, so this is the well-trodden path and lint is wrong here.
+      Scoped to the one folder rather than disabled project-wide.
+    -->
+    <issue id="ObsoleteSdkInt">
+        <ignore path="src/main/res/mipmap-anydpi-v26" />
+    </issue>
+</lint>

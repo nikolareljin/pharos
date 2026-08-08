@@ -6,6 +6,8 @@
 *.iml
 .gradle/
 build/
+# The root project's Gradle output; ./build is the dev-CLI shim script.
+.build/
 captures/
 local.properties
 .cxx/
