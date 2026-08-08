@@ -190,7 +190,7 @@ already sanitised for sharing.
 | Symptom | Cause | What to do |
 |---|---|---|
 | `unable to connect ... Connection refused` | ADB Debugging is off, or the address is wrong | Re-check step 1; re-read the address from **About → Network** |
-| Device shows as `unauthorized` | The dialog on the TV was not accepted | Look at the screen and accept it. If no dialog appeared, `adb kill-server && adb connect …` |
+| Device shows as `unauthorized` | The dialog on the TV was not accepted | Look at the screen and accept it. If no dialog appeared, `adb kill-server && adb connect <addr>` |
 | Device shows as `offline` | Stale connection after a reboot or sleep | `adb disconnect <addr>` then `adb connect <addr>` |
 | `device not found` after it worked | The stick slept or changed address | Reconnect; give it a DHCP reservation if it moves often |
 | `Success`, but nothing in the launcher | Installed into another profile, or the banner is missing | Check `pm list packages --user 0`; a TV entry needs `android:banner` |
