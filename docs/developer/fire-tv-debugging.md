@@ -11,9 +11,9 @@ own device's address.
 ## Connect over the network, not the cable
 
 **The stick's port supplies power. It does not carry ADB.** Plugging it into a
-laptop charges it and nothing else — no device appears in `adb devices`, and
-`lsusb` shows nothing to attach to. Every debugging session with a stick goes
-over the network.
+computer charges it and nothing else: no device enumerates, and `adb devices`
+stays empty however long you wait. Every debugging session with a stick goes
+over the network, whatever you are working from.
 
 Larger boxes and some developer hardware do expose USB debugging; if `adb
 devices` lists your device when plugged in, use that and skip to
