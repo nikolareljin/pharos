@@ -23,6 +23,10 @@ malformed header silently falls back to an auto-generated commit list.
 - CI through the shared reusable workflows: build/lint/test, PR gate, release
   tag gate, auto-tag on merge, and a secret scan.
 - Documentation set under `docs/`, split by audience.
+- `docs/developer/fire-tv-debugging.md` — the full debugging workflow for a Fire
+  TV: why the cable is not an option, enabling ADB, connecting and authorising,
+  installing into the right profile, driving the remote from a keyboard, reading
+  logs, running the instrumented tests, and switching debugging off again.
 - Android application bootstrap: Kotlin, Jetpack Compose, Gradle 8.13 wrapper,
   AGP 8.7, a `gradle/libs.versions.toml` version catalog, `minSdk` 26 /
   `targetSdk` 35, and no dependency on Google Play Services.

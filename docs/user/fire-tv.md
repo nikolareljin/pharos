@@ -40,57 +40,19 @@ Amazon's own references:
 
 ## Enabling developer access
 
-Menu wording changes between Fire OS versions; the shape is stable:
-
 1. **Settings → My Fire TV → About**
-2. Select the device name repeatedly until developer options unlock.
+2. Select the **device name** repeatedly — around seven times — until it
+   confirms developer options are enabled
 3. Back to **My Fire TV → Developer Options**
-4. Enable **ADB Debugging**.
-5. Enable installation from unknown sources if your workflow needs it.
+4. Turn on **ADB Debugging**
 
-Find the address under **Settings → My Fire TV → About → Network**, or in your
-router's lease table.
+The stick's port supplies power only, so debugging happens over the network.
+The full workflow — connecting, installing, driving the remote from a keyboard,
+reading logs, and turning debugging off again afterwards — is in
+[Debugging on a Fire TV](../developer/fire-tv-debugging.md).
 
-Then, from your workstation:
-
-```sh
-sudo apt install adb          # Debian/Ubuntu
-adb connect <FIRE_TV_IP>:5555
-adb devices
-```
-
-Approve the prompt on the TV. **Do not leave ADB enabled on a network you do not
-control** — it is an unauthenticated remote shell.
-
-## Capturing device facts
-
-Useful when filing an issue:
-
-```sh
-adb shell getprop ro.product.model          # expect AFTKM
-adb shell getprop ro.build.version.release
-adb shell getprop ro.build.version.sdk      # expect 30
-adb shell getprop ro.product.cpu.abi
-adb shell cat /proc/meminfo
-adb shell df -h
-adb shell pm list features
-```
-
-## Remote keys
-
-Pharos maps physical keys to logical actions rather than binding to one remote,
-so a game controller, a Bluetooth keyboard and the Fire remote all drive the
-same navigation. Simulate them over ADB while developing:
-
-```sh
-adb shell input keyevent 19   # up
-adb shell input keyevent 20   # down
-adb shell input keyevent 21   # left
-adb shell input keyevent 22   # right
-adb shell input keyevent 23   # select
-adb shell input keyevent 4    # back
-adb shell input keyevent 82   # menu
-```
+**ADB over the network is a remote shell on that device.** Enable it for a
+session on a network you control, and switch it off when you are done.
 
 ## Release acceptance checklist
 
