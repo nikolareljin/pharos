@@ -2,7 +2,7 @@ package io.github.nikolareljin.pharos.ui.focus
 
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.border
-import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.padding
@@ -20,13 +20,9 @@ import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.input.key.Key
-import androidx.compose.ui.input.key.KeyEventType
-import androidx.compose.ui.input.key.key
-import androidx.compose.ui.input.key.onKeyEvent
-import androidx.compose.ui.input.key.type
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.dp
 import androidx.compose.foundation.focusable
@@ -75,21 +71,22 @@ fun FocusableCard(
             )
             .then(if (focusRequester != null) Modifier.focusRequester(focusRequester) else Modifier)
             .onFocusChanged { focused = it.isFocused }
-            .onKeyEvent { event ->
-                // Directional keys are left to Compose's focus system on
-                // purpose. Moving focus by hand is how a layout ends up with a
-                // corner the remote cannot reach.
-                if (onSelect != null &&
-                    event.type == KeyEventType.KeyUp &&
-                    (event.key == Key.DirectionCenter || event.key == Key.Enter)
-                ) {
-                    onSelect()
-                    true
+            // clickable rather than a hand-rolled key handler: it answers a tap
+            // *and* Select/Enter from a remote, and it makes the card focusable
+            // on its own. Handling only key events left the card dead to touch,
+            // and this APK installs on phones and tablets too.
+            //
+            // Directional keys stay with Compose's focus system on purpose —
+            // moving focus by hand is how a layout ends up with a corner the
+            // remote cannot reach.
+            .then(
+                if (onSelect != null) {
+                    Modifier.clickable(role = Role.Button, onClick = onSelect)
                 } else {
-                    false
-                }
-            }
-            .focusable(),
+                    // Still reachable by the remote; it just does not act.
+                    Modifier.focusable()
+                },
+            ),
     ) {
         Column(modifier = Modifier.padding(20.dp)) {
             content(focused)

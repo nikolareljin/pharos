@@ -4,6 +4,7 @@ import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.assertIsFocused
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithTag
+import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.performKeyPress
 import androidx.compose.ui.input.key.Key
 import androidx.compose.ui.input.key.KeyEvent
@@ -14,6 +15,7 @@ import io.github.nikolareljin.pharos.feature.home.TAG_HOME_DIAGNOSTICS
 import io.github.nikolareljin.pharos.feature.home.TAG_HOME_STATUS
 import io.github.nikolareljin.pharos.feature.home.TAG_HOME_TITLE
 import io.github.nikolareljin.pharos.ui.theme.PharosTheme
+import org.junit.Assert.assertTrue
 import org.junit.Rule
 import org.junit.Test
 
@@ -76,10 +78,31 @@ class HomeNavigationTest {
 
         compose.onNodeWithTag(TAG_HOME_STATUS).performKeyPress(keyDown(Key.DirectionRight))
         compose.waitForIdle()
+
+        // Down then up: Compose's clickable arms on the key-down and fires on
+        // the matching key-up, so a lone key-up does nothing and the test would
+        // pass or fail for the wrong reason.
+        compose.onNodeWithTag(TAG_HOME_DIAGNOSTICS).performKeyPress(keyDown(Key.DirectionCenter))
         compose.onNodeWithTag(TAG_HOME_DIAGNOSTICS).performKeyPress(keyUp(Key.DirectionCenter))
         compose.waitForIdle()
 
-        assert(opened) { "Select on the diagnostics card must open diagnostics" }
+        // assertTrue, not Kotlin's assert(): JVM assertions are disabled unless
+        // -ea is passed, and instrumented tests do not pass it — assert() would
+        // silently pass on a broken build.
+        assertTrue("Select on the diagnostics card must open diagnostics", opened)
+    }
+
+    @Test
+    fun tappingTheDiagnosticsCardOpensDiagnostics() {
+        // The APK installs on phones and tablets, so every control has to answer
+        // a finger as well as a remote.
+        var opened = false
+        setHome(onOpenDiagnostics = { opened = true })
+
+        compose.onNodeWithTag(TAG_HOME_DIAGNOSTICS).performClick()
+        compose.waitForIdle()
+
+        assertTrue("Tapping the diagnostics card must open diagnostics", opened)
     }
 
     private fun keyDown(key: Key) = KeyEvent(

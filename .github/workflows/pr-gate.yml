@@ -22,7 +22,8 @@ jobs:
       lint_command: >-
         git submodule update --init --recursive &&
         bash scripts/check-private-names.sh &&
-        shellcheck -S warning scripts/preflight.sh scripts/check-private-names.sh scripts/gen_icons.sh scripts/project.sh
+        bash scripts/check-changelog.sh &&
+        shellcheck -S warning scripts/preflight.sh scripts/check-private-names.sh scripts/check-changelog.sh scripts/gen_icons.sh scripts/project.sh
       timeout_minutes: 15
 
   android:
