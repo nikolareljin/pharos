@@ -7,11 +7,18 @@ plugins {
 // The app version is read from VERSION at the repository root so there is one
 // place to change it. versionCode is derived from the same string: 1.2.3 -> 10203.
 val appVersionName: String = rootProject.file("VERSION").readText().trim()
-val appVersionCode: Int = appVersionName
-    .substringBefore('-')
-    .split('.')
-    .map { it.toInt() }
-    .let { (major, minor, patch) -> major * 10000 + minor * 100 + patch }
+val appVersionCode: Int = run {
+    val parts = appVersionName.substringBefore('-').split('.')
+    // Checked rather than destructured blind: `0.1`, a stray space or an
+    // editor's trailing character would otherwise fail deep inside Gradle
+    // configuration with a NumberFormatException that names neither the file
+    // nor the value.
+    require(parts.size == 3 && parts.all { it.isNotEmpty() && it.all(Char::isDigit) }) {
+        "VERSION must be MAJOR.MINOR.PATCH with an optional -suffix; found \"$appVersionName\""
+    }
+    val (major, minor, patch) = parts.map(String::toInt)
+    major * 10000 + minor * 100 + patch
+}
 
 android {
     namespace = "io.github.nikolareljin.pharos"
