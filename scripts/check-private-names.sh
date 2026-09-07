@@ -104,11 +104,13 @@ fi
 # ("anchor", "notifications") are left out of .private-names to avoid constant
 # false positives, so a reference to one is caught here, where the surrounding
 # owner/repo form makes the intent unambiguous. Only the public dependencies of
-# this repository are allowed.
+# this repository are allowed. `stats` is nikolareljin/stats, the public
+# chart-assets repository the clone-traffic badge in README.md renders from;
+# it is public by design, so naming it leaks nothing.
 
 OWNER_REFS="$(grep -nIoE --binary-files=without-match \
   '(github\.com[/:]|\b)nikolareljin/[A-Za-z0-9._-]+' "${FILES[@]}" 2>/dev/null \
-  | grep -vE '/(pharos|ci-helpers|script-helpers)(\.git)?([^A-Za-z0-9._-]|$)' || true)"
+  | grep -vE '/(pharos|ci-helpers|script-helpers|stats)(\.git)?([^A-Za-z0-9._-]|$)' || true)"
 report "reference to another repository under the same owner" "$OWNER_REFS"
 
 # --- 2. Private-range IP literals ---------------------------------------------
