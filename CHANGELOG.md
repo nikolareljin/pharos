@@ -9,6 +9,10 @@ malformed header silently falls back to an auto-generated commit list.
 
 ## [Unreleased]
 
+### Fixed
+- Secret Scan passes `upload_artifact: "false"`; the shared gitleaks action
+  refuses any other value, so the scan failed on every push.
+
 ### Added
 - Repository foundation: MIT license, contribution and security policy, issue
   and pull-request templates, `.editorconfig`.
