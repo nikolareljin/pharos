@@ -28,4 +28,5 @@ jobs:
         uses: nikolareljin/ci-helpers/.github/actions/gitleaks-scan@production
         with:
           fail_on_findings: "true"
-          upload_artifact: "true"
+          # Results stay local: the action refuses to run with an upload.
+          upload_artifact: "false"
